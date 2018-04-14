@@ -60,8 +60,7 @@ public class TarLauncher {
 
         if (outputConnect.matches("[^/:*?\"<>|]*.txt")) {
 
-            FileWriter writer = new FileWriter(outputConnect);
-             Tar.connect(writer, args);
+             Tar.connect(outputConnect, args);
 
         } else{
 

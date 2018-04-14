@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 class TarTest {
 
-    private static String connect(String file) throws IOException {
+    private static String connect2(String file) throws IOException {
 
         Scanner fileTemp = new Scanner(new FileReader(file));
         StringBuilder result = new StringBuilder("");
@@ -47,7 +47,11 @@ class TarTest {
     @Test
     void connect() throws IOException {
 
-        assertEquals(connect("output/output1.txt"), connect1(new String[]{"input/input1.txt", "input/input2.txt", "input/input3.txt", "input/input4.txt", "input/input5.txt"}));
+        Tar.connect("output/output1.txt", new String[]{"input/input1.txt", "input/input2.txt", "input/input3.txt", "input/input4.txt", "input/input5.txt"});
+        assertEquals(connect2("output/output1.txt"), connect1(new String[]{"input/input1.txt", "input/input2.txt", "input/input3.txt", "input/input4.txt", "input/input5.txt"}));
+
+        Tar.connect("output/output1.txt", new String[]{"input/input3.txt", "input/input5.txt"});
+        assertEquals(connect2("output/output1.txt"), connect1(new String[]{"input/input3.txt", "input/input5.txt"}));
 
     }
 
@@ -57,9 +61,13 @@ class TarTest {
         Tar.split(new Scanner(new FileReader("output/output2.txt")));
 
         for (String file: new String[]{"input1.txt", "input2.txt", "input3.txt"}){
-            assertEquals(connect("input/" + file), connect("input1/" + file));
+            assertEquals(connect2("input/" + file), connect2("input1/" + file));
         }
 
+        Tar.split(new Scanner(new FileReader("output/output4.txt")));
+        for (String file: new String[]{"input1.txt", "input4.txt", "input5.txt"}){
+            assertEquals(connect2("input/" + file), connect2("input1/" + file));
+        }
     }
 
 }

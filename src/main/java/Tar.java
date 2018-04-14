@@ -34,8 +34,9 @@ public class Tar {
         }
     }
 
-    public static void connect(FileWriter writer, String[] args) throws IOException {
+    public static void connect(String file, String[] args) throws IOException {
 
+        FileWriter writer = new FileWriter(file);
         for (String nameFile : args){
 
             Scanner input = new Scanner(new FileReader(nameFile));

@@ -53,6 +53,8 @@ class TarTest {
         Tar.connect("output/output1.txt", new String[]{"input/input3.txt", "input/input5.txt"});
         assertEquals(connect2("output/output1.txt"), connect1(new String[]{"input/input3.txt", "input/input5.txt"}));
 
+        Tar.connect("output/output1.txt", new String[]{"input/input3.txt", "input/input5.txt", "input/input6.txt"});
+        assertEquals(connect2("output/output1.txt"), connect1(new String[]{"input/input3.txt", "input/input5.txt", "input/input6.txt"}));
     }
 
     @Test
@@ -60,7 +62,7 @@ class TarTest {
 
         Tar.split(new Scanner(new FileReader("output/output2.txt")));
 
-        for (String file: new String[]{"input1.txt", "input2.txt", "input3.txt"}){
+        for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
             assertEquals(connect2("input/" + file), connect2("input1/" + file));
         }
 

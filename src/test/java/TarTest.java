@@ -1,5 +1,4 @@
 import core.Tar;
-import core.TarLauncher;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -9,19 +8,19 @@ import static org.junit.Assert.assertEquals;
 
 class TarTest {
 
-    final String format = "[^/:*?\"<>|]*.txt";
-    private final String OUTPUT1 = "src/test/resources/output/output1.txt";
-    private final String OUTPUT2 = "src/test/resources/output/output2.txt";
-    private final String OUTPUT4 = "src/test/resources/output/output4.txt";
-    private final String OUTPUT5 = "src/test/resources/output/output5.txt";
-    private final String INPUT1 = "src/test/resources/input/input1.txt";
-    private final String INPUT2 = "src/test/resources/input/input2.txt";
-    private final String INPUT3 = "src/test/resources/input/input3.txt";
-    private final String INPUT4 = "src/test/resources/input/input4.txt";
-    private final String INPUT5 = "src/test/resources/input/input5.txt";
-    private final String INPUT6 = "src/test/resources/input/input6.txt";
-    private final String WAY_INPUT = "src/test/resources/input/";
-    private final String WAY_INPUT1 = "src/test/resources/input1/";
+    private final static String format = "[^/:*?\"<>|]*.txt";
+    private final static String OUTPUT1 = "src/test/resources/output/output1.txt";
+    private final static String OUTPUT2 = "src/test/resources/output/output2.txt";
+    private final static String OUTPUT4 = "src/test/resources/output/output4.txt";
+    private final static String OUTPUT5 = "src/test/resources/output/output5.txt";
+    private final static String INPUT1 = "src/test/resources/input/input1.txt";
+    private final static String INPUT2 = "src/test/resources/input/input2.txt";
+    private final static String INPUT3 = "src/test/resources/input/input3.txt";
+    private final static String INPUT4 = "src/test/resources/input/input4.txt";
+    private final static String INPUT5 = "src/test/resources/input/input5.txt";
+    private final static String INPUT6 = "src/test/resources/input/input6.txt";
+    private final static String WAY_INPUT = "src/test/resources/input/";
+    private final static String WAY_INPUT1 = "src/test/resources/input1/";
     /**
      * Метод превращает содержимое всех файлов которые подаются в строку
      * @param str Пути всех файлов

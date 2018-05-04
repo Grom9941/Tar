@@ -10,17 +10,18 @@ import static org.junit.Assert.assertEquals;
 class TarTest {
 
     final String format = "[^/:*?\"<>|]*.txt";
-    private final String OUTPUT1 = "src/test/output/output1.txt";
-    private final String OUTPUT2 = "src/test/output/output2.txt";
-    private final String OUTPUT4 = "src/test/output/output4.txt";
-    private final String OUTPUT5 = "src/test/output/output5.txt";
-    private final String INPUT1 = "src/test/input/input1.txt";
-    private final String INPUT2 = "src/test/input/input2.txt";
-    private final String INPUT3 = "src/test/input/input3.txt";
-    private final String INPUT4 = "src/test/input/input4.txt";
-    private final String INPUT5 = "src/test/input/input5.txt";
-    private final String INPUT6 = "src/test/input/input6.txt";
-
+    private final String OUTPUT1 = "src/test/resources/output/output1.txt";
+    private final String OUTPUT2 = "src/test/resources/output/output2.txt";
+    private final String OUTPUT4 = "src/test/resources/output/output4.txt";
+    private final String OUTPUT5 = "src/test/resources/output/output5.txt";
+    private final String INPUT1 = "src/test/resources/input/input1.txt";
+    private final String INPUT2 = "src/test/resources/input/input2.txt";
+    private final String INPUT3 = "src/test/resources/input/input3.txt";
+    private final String INPUT4 = "src/test/resources/input/input4.txt";
+    private final String INPUT5 = "src/test/resources/input/input5.txt";
+    private final String INPUT6 = "src/test/resources/input/input6.txt";
+    private final String WAY_INPUT = "src/test/resources/input/";
+    private final String WAY_INPUT1 = "src/test/resources/input1/";
     /**
      * Метод превращает содержимое всех файлов которые подаются в строку
      * @param str Пути всех файлов
@@ -62,21 +63,21 @@ class TarTest {
         Tar.split(new Scanner(new FileReader(OUTPUT2)));
         for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
             if (file.matches(format)) {
-                assertEquals(connectToString(new String[]{"src/test/input/" + file}), connectToString(new String[]{"src/test/input1/" + file}));
+                assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
             } else System.out.println("Невозмодный формат");
         }
 
         Tar.split(new Scanner(new FileReader(OUTPUT5)));
         for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
             if (file.matches(format)) {
-                assertEquals(connectToString(new String[]{"src/test/input/" + file}), connectToString(new String[]{"src/test/input1/" + file}));
+                assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
             } else System.out.println("Невозмодный формат");
         }
 
         Tar.split(new Scanner(new FileReader(OUTPUT4)));
         for (String file: new String[]{"input1.txt", "input4.txt", "input5.txt"}){
             if (file.matches(format)) {
-                assertEquals(connectToString(new String[]{"src/test/input/" + file}), connectToString(new String[]{"src/test/input1/" + file}));
+                assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
             } else System.out.println("Невозмодный формат");
         }
     }

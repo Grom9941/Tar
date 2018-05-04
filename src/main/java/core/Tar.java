@@ -1,5 +1,7 @@
 package core;
 
+import org.junit.Assert;
+
 import java.io.*;
 import java.util.*;
 
@@ -32,14 +34,14 @@ public class Tar {
                 fileString = reader.nextLine();
             } else {
                 System.out.println("Неверный формат файла");
-                break;
+                Assert.assertEquals(1,0);
             }
 
         }
 
         while (reader.hasNext()){
 
-            FileWriter writer = new FileWriter("src/test/input1/"+ fileName.get(number).split(" ")[0]);
+            FileWriter writer = new FileWriter("src/test/resources/input1/"+ fileName.get(number).split(" ")[0]);
 
             for (int i = 0; i < Integer.valueOf(fileName.get(number).split(" ")[1]); i++){
 

@@ -1,8 +1,13 @@
+package core;
+
+import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TarLauncher {
@@ -13,8 +18,8 @@ public class TarLauncher {
     @Option(name = "-out", metaVar = "connect", required = true, usage = "Input file to connect")
     private String outputConnect;
 
- //   @Argument(required = true, metaVar = "Output", index = 1, usage = "")
- //   private String a;
+    @Argument(required = true, metaVar = "Output", index = 1, usage = "")
+    private List<String> files;
 
     public static void main(String[] args) throws IOException {
 
@@ -22,8 +27,9 @@ public class TarLauncher {
 
     }
 
-    private void launch(String[] args) throws IOException {
+    public void launch(String[] args) throws IOException {
 
+        final String format = "[^/:*?\"<>|]*.txt";
         CmdLineParser parser = new CmdLineParser(this);
 
         try{
@@ -46,7 +52,7 @@ public class TarLauncher {
 
         }
 
-        if (inputSplit.matches("[^/:*?\"<>|]*.txt")) {
+        if (inputSplit.matches(format)) {
 
             Scanner reader = new Scanner(new FileReader(inputSplit));
             Tar.split(reader);
@@ -58,7 +64,7 @@ public class TarLauncher {
 
         }
 
-        if (outputConnect.matches("[^/:*?\"<>|]*.txt")) {
+        if (outputConnect.matches(format)) {
 
              Tar.connect(outputConnect, args);
 

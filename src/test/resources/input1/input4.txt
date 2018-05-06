@@ -1,3 +1,4 @@
+input4.txt 10
 fjjj
 saaa
 a

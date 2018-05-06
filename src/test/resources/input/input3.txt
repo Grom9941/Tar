@@ -1,2 +1,3 @@
+input3.txt 2
 fggf
 dhdhdhhd

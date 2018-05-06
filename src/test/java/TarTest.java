@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 class TarTest {
 
@@ -13,6 +14,7 @@ class TarTest {
     private final static String OUTPUT2 = "src/test/resources/output/output2.txt";
     private final static String OUTPUT4 = "src/test/resources/output/output4.txt";
     private final static String OUTPUT5 = "src/test/resources/output/output5.txt";
+    private final static String OUTPUT6 = "src/test/resources/output/output6.txt";
     private final static String INPUT1 = "src/test/resources/input/input1.txt";
     private final static String INPUT2 = "src/test/resources/input/input2.txt";
     private final static String INPUT3 = "src/test/resources/input/input3.txt";
@@ -21,6 +23,7 @@ class TarTest {
     private final static String INPUT6 = "src/test/resources/input/input6.txt";
     private final static String WAY_INPUT = "src/test/resources/input/";
     private final static String WAY_INPUT1 = "src/test/resources/input1/";
+
     /**
      * Метод превращает содержимое всех файлов которые подаются в строку
      * @param str Пути всех файлов
@@ -31,6 +34,11 @@ class TarTest {
         StringBuilder result = new StringBuilder();
 
         for (String aStr : str) {
+         //   if (!aStr.matches(format) || aStr.i) {
+           if ( !new File(aStr).exists()) {
+                System.out.println("Невозмодный формат");
+                throw new IllegalArgumentException();
+            }
             Scanner fileTemp1 = new Scanner(new FileReader(aStr));
 
             while (fileTemp1.hasNext()) {
@@ -54,6 +62,9 @@ class TarTest {
 
         Tar.connect(OUTPUT1, new String[]{INPUT3, INPUT5, INPUT6});
         assertEquals(connectToString(new String[]{OUTPUT1}), connectToString(new String[]{INPUT3, INPUT5, INPUT6}));
+
+        Tar.connect(OUTPUT1, new String[]{INPUT3, INPUT5, INPUT1, INPUT6});
+        assertEquals(connectToString(new String[]{OUTPUT1}), connectToString(new String[]{INPUT3, INPUT5, INPUT1, INPUT6}));
     }
 
     @Test
@@ -61,24 +72,26 @@ class TarTest {
 
         Tar.split(new Scanner(new FileReader(OUTPUT2)));
         for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
-            if (file.matches(format)) {
                 assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
-            } else System.out.println("Невозмодный формат");
-        }
-
-        Tar.split(new Scanner(new FileReader(OUTPUT5)));
-        for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
-            if (file.matches(format)) {
-                assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
-            } else System.out.println("Невозмодный формат");
         }
 
         Tar.split(new Scanner(new FileReader(OUTPUT4)));
         for (String file: new String[]{"input1.txt", "input4.txt", "input5.txt"}){
-            if (file.matches(format)) {
                 assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
-            } else System.out.println("Невозмодный формат");
         }
-    }
 
+        try {
+            Tar.split(new Scanner(new FileReader(OUTPUT6)));
+            for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
+                    assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
+            }
+        } catch(IllegalArgumentException e){}
+
+
+        Tar.split(new Scanner(new FileReader(OUTPUT5)));
+        for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
+                assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
+        }
+
+    }
 }

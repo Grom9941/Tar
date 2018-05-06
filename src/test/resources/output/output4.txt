@@ -1,8 +1,6 @@
 input1.txt 1
-input4.txt 10
-input5.txt 10
-
 ggggg
+input4.txt 10
 fjjj
 saaa
 a
@@ -13,6 +11,7 @@ a
 s
 a
 a
+input5.txt 10
 hddd
 d
 d

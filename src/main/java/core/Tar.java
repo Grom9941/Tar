@@ -7,14 +7,17 @@ import java.util.*;
 
 public class Tar {
 
+    private final static String format = "[^/:*?\"<>|]*.txt";
+
     /**
      * Файл в формате:
      * nameFile.txt countString
      * input2.txt 3
-     * ......
+     * text..
      * ......
      * input3.txt 2
-     *
+     * text..
+     * input4.txt 0
      * text...
      *
      * Записывает в нужные файлы
@@ -22,36 +25,39 @@ public class Tar {
      * @throws IOException Если не возможно будет вписать в файл
      */
     public static void split(Scanner reader) throws IOException {
-
         Integer number = 0;
-        List<String> fileName = new LinkedList<>();
-        String fileString = reader.nextLine();
+        String fileName;
 
-        while (!fileString.equals("")){
-
-            fileName.add (fileString);
-            if (reader.hasNext()) {
-                fileString = reader.nextLine();
-            } else {
-                System.out.println("Неверный формат файла");
-                Assert.assertEquals(1,0);
+        while (reader.hasNext()) {
+            fileName = reader.nextLine();
+            if (fileName.split(" ").length != 2) {
+                System.out.println("Не хватает строк в главном файле");
+                throw new IllegalArgumentException();
             }
 
-        }
+            if (!fileName.split(" ")[0].matches(format)) {
+                System.out.println("Невозмодный формат");
+                throw new IllegalArgumentException();
+            }
 
-        while (reader.hasNext()){
+            FileWriter writer = new FileWriter("src/test/resources/input1/"+ fileName.split(" ")[0]);
+            writer.write(fileName+ "\n");
 
-            FileWriter writer = new FileWriter("src/test/resources/input1/"+ fileName.get(number).split(" ")[0]);
+            for (int i = 0; i < Integer.valueOf(fileName.split(" ")[1]); i++){
 
-            for (int i = 0; i < Integer.valueOf(fileName.get(number).split(" ")[1]); i++){
+                if (reader.hasNext()) {
+                    writer.write(reader.nextLine() + "\n");
+                } else {
+                    System.out.println("Не хватает строк в главном файле");
+                    throw new IllegalArgumentException();
 
-                writer.write(reader.nextLine());
-                writer.write("\n");
+                }
 
             }
 
             number++;
             writer.close();
+
         }
     }
 
@@ -63,16 +69,22 @@ public class Tar {
      */
     public static void connect(String file, String[] args) throws IOException {
 
+        if (!new File(file).exists()) {
+            System.out.println("Несуществует файл");
+            throw new IllegalArgumentException();
+        }
         FileWriter writer = new FileWriter(file);
+
         for (String nameFile : args){
+            if (!new File(nameFile).exists()) {
+                System.out.println("Несуществует файл");
+                throw new IllegalArgumentException();
+            }
 
             Scanner input = new Scanner(new FileReader(nameFile));
 
             while(input.hasNext()){
-
-                writer.write(input.nextLine());
-                writer.write("\n");
-
+                writer.write(input.nextLine() + "\n");
             }
 
             input.close();

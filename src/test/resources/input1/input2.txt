@@ -1,3 +1,4 @@
+input2.txt 3
 fgf
 fhdh
 dgh

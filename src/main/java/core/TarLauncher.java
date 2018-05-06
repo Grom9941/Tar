@@ -55,7 +55,7 @@ public class TarLauncher {
 
         }
 
-        if (inputSplit) {
+        if (inputSplit && files.matches(format)) {
 
             Scanner reader = new Scanner(new FileReader(files));
             Tar.split(reader);
@@ -67,8 +67,13 @@ public class TarLauncher {
 
         }
 
-        if (outputConnect) {
-
+        if (outputConnect && files.matches(format)) {
+            for (String nameFile : args) {
+                if (!nameFile.matches(format)) {
+                    System.out.println("Неверный формат файла");
+                    throw new IOException();
+                }
+            }
              Tar.connect(files, args);
 
         } else{

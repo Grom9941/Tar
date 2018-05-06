@@ -24,12 +24,12 @@ public class Tar {
      * @param reader Начальный файл который нужно разобрать
      * @throws IOException Если не возможно будет вписать в файл
      */
-    public static void split(Scanner reader) throws IOException {
-        Integer number = 0;
+    public static void split(Scanner reader) {
         String fileName;
 
         while (reader.hasNext()) {
             fileName = reader.nextLine();
+
             if (fileName.split(" ").length != 2) {
                 System.out.println("Не хватает строк в главном файле");
                 throw new IllegalArgumentException();
@@ -40,23 +40,19 @@ public class Tar {
                 throw new IllegalArgumentException();
             }
 
-            FileWriter writer = new FileWriter("src/test/resources/input1/"+ fileName.split(" ")[0]);
-            writer.write(fileName+ "\n");
+            try (FileWriter writer = new FileWriter("src/test/resources/input1/"+ fileName.split(" ")[0])) {
+                writer.write(fileName + "\n");
 
-            for (int i = 0; i < Integer.valueOf(fileName.split(" ")[1]); i++){
-
-                if (reader.hasNext()) {
-                    writer.write(reader.nextLine() + "\n");
-                } else {
-                    System.out.println("Не хватает строк в главном файле");
-                    throw new IllegalArgumentException();
-
+                for (int i = 0; i < Integer.valueOf(fileName.split(" ")[1]); i++) {
+                    if (reader.hasNext()) {
+                        writer.write(reader.nextLine() + "\n");
+                    } else {
+                        System.out.println("Не хватает строк в главном файле");
+                        throw new IllegalArgumentException();
+                    }
                 }
 
-            }
-
-            number++;
-            writer.close();
+            } catch (IOException e) { System.out.println("Не возможно прочитать файл"); }
 
         }
     }
@@ -67,30 +63,30 @@ public class Tar {
      * @param args Файлы у которых нужно брать содержимое
      * @throws IOException Если не возможно будет вписать в файл или прочитать файл
      */
-    public static void connect(String file, String[] args) throws IOException {
+    public static void connect(String file, String[] args) throws FileNotFoundException {
 
         if (!new File(file).exists()) {
-            System.out.println("Несуществует файл");
-            throw new IllegalArgumentException();
-        }
-        FileWriter writer = new FileWriter(file);
-
-        for (String nameFile : args){
-            if (!new File(nameFile).exists()) {
-                System.out.println("Несуществует файл");
-                throw new IllegalArgumentException();
-            }
-
-            Scanner input = new Scanner(new FileReader(nameFile));
-
-            while(input.hasNext()){
-                writer.write(input.nextLine() + "\n");
-            }
-
-            input.close();
+            System.out.println("Не существует файл");
+            throw new FileNotFoundException();
         }
 
-        writer.close();
+        try (FileWriter writer = new FileWriter(file)) {
+
+            for (String nameFile : args) {
+
+                if (!new File(nameFile).exists()) {
+                    System.out.println("Не существует файл");
+                    throw new FileNotFoundException();
+                }
+
+                try (Scanner input = new Scanner(new FileReader(nameFile))) {
+                    while (input.hasNext()) {
+                        writer.write(input.nextLine() + "\n");
+                    }
+                } catch (FileNotFoundException e) { System.out.println("Не существует файл"); }
+
+            }
+        } catch (IOException e) { System.out.println("Не возможно прочитать файл"); }
+
     }
-
 }

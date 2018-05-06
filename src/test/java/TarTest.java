@@ -5,11 +5,9 @@ import java.io.*;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 class TarTest {
 
-    private final static String format = "[^/:*?\"<>|]*.txt";
     private final static String OUTPUT1 = "src/test/resources/output/output1.txt";
     private final static String OUTPUT2 = "src/test/resources/output/output2.txt";
     private final static String OUTPUT4 = "src/test/resources/output/output4.txt";
@@ -30,23 +28,23 @@ class TarTest {
      * @return Строку собранную из содержимого файлов
      * @throws IOException Если будет не возможно прочитать файл
      */
-    private static String connectToString (String[] str) throws IOException {
+    private static String connectToString (String[] str) {
         StringBuilder result = new StringBuilder();
 
         for (String aStr : str) {
-         //   if (!aStr.matches(format) || aStr.i) {
+
            if ( !new File(aStr).exists()) {
                 System.out.println("Невозмодный формат");
                 throw new IllegalArgumentException();
             }
-            Scanner fileTemp1 = new Scanner(new FileReader(aStr));
 
-            while (fileTemp1.hasNext()) {
+            try (Scanner fileTemp1 = new Scanner(new FileReader(aStr))) {
+                while (fileTemp1.hasNext()) {
+                    result.append(fileTemp1.nextLine());
+                    result.append("\n");
+                }
+            } catch (IOException e) { System.out.println("Не возможно прочитать файл"); }
 
-                result.append(fileTemp1.nextLine());
-                result.append("\n");
-            }
-            fileTemp1.close();
         }
         return result.toString();
     }

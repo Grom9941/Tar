@@ -1,7 +1,5 @@
 package core;
 
-import org.junit.Assert;
-
 import java.io.*;
 import java.util.*;
 
@@ -22,7 +20,6 @@ public class Tar {
      *
      * Записывает в нужные файлы
      * @param reader Начальный файл который нужно разобрать
-     * @throws IOException Если не возможно будет вписать в файл
      */
     public static void split(Scanner reader) {
         String fileName;
@@ -61,7 +58,7 @@ public class Tar {
      * Совмещает все фалы поданные в виде(String[]) в один файл(file)
      * @param file Путь к файлу который нужно заполнить
      * @param args Файлы у которых нужно брать содержимое
-     * @throws IOException Если не возможно будет вписать в файл или прочитать файл
+     * @throws FileNotFoundException Если файл не будет существовать(идентификация по пути к файлу)
      */
     public static void connect(String file, String[] args) throws FileNotFoundException {
 

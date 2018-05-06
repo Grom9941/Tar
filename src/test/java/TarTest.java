@@ -8,25 +8,24 @@ import static org.junit.Assert.assertEquals;
 
 class TarTest {
 
-    private final static String OUTPUT1 = "src/test/resources/output/output1.txt";
-    private final static String OUTPUT2 = "src/test/resources/output/output2.txt";
-    private final static String OUTPUT4 = "src/test/resources/output/output4.txt";
-    private final static String OUTPUT5 = "src/test/resources/output/output5.txt";
-    private final static String OUTPUT6 = "src/test/resources/output/output6.txt";
-    private final static String INPUT1 = "src/test/resources/input/input1.txt";
-    private final static String INPUT2 = "src/test/resources/input/input2.txt";
-    private final static String INPUT3 = "src/test/resources/input/input3.txt";
-    private final static String INPUT4 = "src/test/resources/input/input4.txt";
-    private final static String INPUT5 = "src/test/resources/input/input5.txt";
-    private final static String INPUT6 = "src/test/resources/input/input6.txt";
-    private final static String WAY_INPUT = "src/test/resources/input/";
-    private final static String WAY_INPUT1 = "src/test/resources/input1/";
+    private static final String OUTPUT1 = "src/test/resources/output/output1.txt";
+    private static final String OUTPUT2 = "src/test/resources/output/output2.txt";
+    private static final String OUTPUT4 = "src/test/resources/output/output4.txt";
+    private static final String OUTPUT5 = "src/test/resources/output/output5.txt";
+    private static final String OUTPUT6 = "src/test/resources/output/output6.txt";
+    private static final String INPUT1 = "src/test/resources/input/input1.txt";
+    private static final String INPUT2 = "src/test/resources/input/input2.txt";
+    private static final String INPUT3 = "src/test/resources/input/input3.txt";
+    private static final String INPUT4 = "src/test/resources/input/input4.txt";
+    private static final String INPUT5 = "src/test/resources/input/input5.txt";
+    private static final String INPUT6 = "src/test/resources/input/input6.txt";
+    private static final String WAY_INPUT = "src/test/resources/input/";
+    private static final String WAY_INPUT1 = "src/test/resources/input1/";
 
     /**
      * Метод превращает содержимое всех файлов которые подаются в строку
      * @param str Пути всех файлов
      * @return Строку собранную из содержимого файлов
-     * @throws IOException Если будет не возможно прочитать файл
      */
     private static String connectToString (String[] str) {
         StringBuilder result = new StringBuilder();
@@ -83,7 +82,7 @@ class TarTest {
             for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
                     assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
             }
-        } catch(IllegalArgumentException e){}
+        } catch(IllegalArgumentException ignored){}
 
 
         Tar.split(new Scanner(new FileReader(OUTPUT5)));

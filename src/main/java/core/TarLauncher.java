@@ -6,7 +6,6 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.*;
-import java.util.List;
 import java.util.Scanner;
 
 public class TarLauncher {
@@ -17,7 +16,7 @@ public class TarLauncher {
     @Option(name = "-out", metaVar = "connect", required = true, usage = "Input file to connect" ,forbids = "-u")
     private boolean outputConnect;
 
-    @Argument(required = true, metaVar = "Output", usage = "")
+    @Argument(required = true, metaVar = "Output", usage = "Name files")
     private String files;
 
     public static void main(String[] args) {
@@ -30,7 +29,7 @@ public class TarLauncher {
 
     }
 
-    public void launch(String[] args) throws IOException {
+    private void launch(String[] args) throws IOException {
 
         final String format = "[^/:*?\"<>|]*.txt";
         CmdLineParser parser = new CmdLineParser(this);

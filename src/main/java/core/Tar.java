@@ -38,7 +38,6 @@ public class Tar {
             }
 
             try (FileWriter writer = new FileWriter("src/test/resources/input1/"+ fileName.split(" ")[0])) {
-                writer.write(fileName + "\n");
 
                 for (int i = 0; i < Integer.valueOf(fileName.split(" ")[1]); i++) {
                     if (reader.hasNext()) {
@@ -75,6 +74,7 @@ public class Tar {
                     System.out.println("Не существует файл");
                     throw new FileNotFoundException();
                 }
+                writer.write(nameFile.split("/")[nameFile.split("/").length-1] + " " + String.valueOf(getCountString(nameFile)) + "\n");
 
                 try (Scanner input = new Scanner(new FileReader(nameFile))) {
                     while (input.hasNext()) {
@@ -85,5 +85,18 @@ public class Tar {
             }
         } catch (IOException e) { System.out.println("Не возможно прочитать файл"); }
 
+    }
+
+    public static Integer getCountString(String file){
+        Integer count = 0;
+
+        try (Scanner input = new Scanner(new FileReader(file))) {
+            while (input.hasNext()) {
+                input.nextLine();
+                count ++;
+            }
+        } catch (FileNotFoundException e) { System.out.println("Не существует файл"); }
+
+        return count;
     }
 }

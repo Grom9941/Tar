@@ -6,6 +6,8 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class TarLauncher {
@@ -17,7 +19,7 @@ public class TarLauncher {
     private boolean outputConnect;
 
     @Argument(required = true, metaVar = "Output", usage = "Name files")
-    private String files;
+    private String[] files;
 
     public static void main(String[] args) {
 
@@ -30,7 +32,6 @@ public class TarLauncher {
     }
 
     private void launch(String[] args) throws IOException {
-
         final String format = "[^/:*?\"<>|]*.txt";
         CmdLineParser parser = new CmdLineParser(this);
 
@@ -54,9 +55,9 @@ public class TarLauncher {
 
         }
 
-        if (inputSplit && files.matches(format)) {
+        if (inputSplit && files[0].matches(format)) {
 
-            Scanner reader = new Scanner(new FileReader(files));
+            Scanner reader = new Scanner(new FileReader(files[0]));
             Tar.split(reader);
 
         } else{
@@ -66,14 +67,14 @@ public class TarLauncher {
 
         }
 
-        if (outputConnect && files.matches(format)) {
-            for (String nameFile : args) {
+        if (outputConnect) {
+            for (String nameFile : files) {
                 if (!nameFile.matches(format)) {
                     System.out.println("Неверный формат файла");
                     throw new IOException();
                 }
             }
-             Tar.connect(files, args);
+             Tar.connect(files[files.length-1], Arrays.copyOfRange(files,0,files.length-2));
 
         } else{
 

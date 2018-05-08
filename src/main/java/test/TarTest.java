@@ -1,9 +1,12 @@
+package test;
+
 import core.Tar;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.util.Scanner;
 
+import static core.Tar.getCountString;
 import static org.junit.Assert.assertEquals;
 
 class TarTest {
@@ -38,9 +41,12 @@ class TarTest {
             }
 
             try (Scanner fileTemp1 = new Scanner(new FileReader(aStr))) {
+               if (str.length != 1){
+                   result.append(aStr.split("/")[aStr.split("/").length-1] + " " + String.valueOf(getCountString(aStr)) + "\n");
+               }
+
                 while (fileTemp1.hasNext()) {
-                    result.append(fileTemp1.nextLine());
-                    result.append("\n");
+                    result.append(fileTemp1.nextLine() + "\n");
                 }
             } catch (IOException e) { System.out.println("Не возможно прочитать файл"); }
 

@@ -57,14 +57,8 @@ public class Tar {
      * Совмещает все фалы поданные в виде(String[]) в один файл(file)
      * @param file Путь к файлу который нужно заполнить
      * @param args Файлы у которых нужно брать содержимое
-     * @throws FileNotFoundException Если файл не будет существовать(идентификация по пути к файлу)
      */
-    public static void connect(String file, String[] args) throws FileNotFoundException {
-
-        if (!new File(file).exists()) {
-            System.out.println("Не существует файл");
-            throw new FileNotFoundException();
-        }
+    public static void connect(String file, String[] args) {
 
         try (FileWriter writer = new FileWriter(file)) {
 
@@ -87,6 +81,11 @@ public class Tar {
 
     }
 
+    /**
+     * Считает количество строк
+     * @param file Путь к файлу
+     * @return Количество строк
+     */
     public static Integer getCountString(String file){
         Integer count = 0;
 

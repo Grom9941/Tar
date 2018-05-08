@@ -1,6 +1,7 @@
 package test;
 
 import core.Tar;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -55,7 +56,7 @@ class TarTest {
     }
 
     @Test
-    void connect() throws IOException {
+    void connect() {
 
         Tar.connect(OUTPUT1, new String[]{INPUT1, INPUT2, INPUT3, INPUT4, INPUT5});
         assertEquals(connectToString(new String[]{OUTPUT1}), connectToString(new String[]{INPUT1, INPUT2, INPUT3, INPUT4, INPUT5}));
@@ -83,13 +84,7 @@ class TarTest {
                 assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
         }
 
-        try {
-            Tar.split(new Scanner(new FileReader(OUTPUT6)));
-            for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
-                    assertEquals(connectToString(new String[]{WAY_INPUT + file}), connectToString(new String[]{WAY_INPUT1 + file}));
-            }
-        } catch(IllegalArgumentException ignored){}
-
+        Assertions.assertThrows(IllegalArgumentException.class,() -> Tar.split(new Scanner(new FileReader(OUTPUT6))));
 
         Tar.split(new Scanner(new FileReader(OUTPUT5)));
         for (String file: new String[]{"input6.txt", "input1.txt", "input2.txt", "input3.txt"}){
@@ -97,4 +92,5 @@ class TarTest {
         }
 
     }
+
 }

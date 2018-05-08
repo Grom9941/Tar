@@ -7,15 +7,14 @@ import org.kohsuke.args4j.Option;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class TarLauncher {
 
-    @Option(name = "-u", metaVar = "split", required = true, usage = "Input file to split", forbids = "-out")
+    @Option(name = "-u", metaVar = "split", usage = "Input file to split")
     private boolean inputSplit;
 
-    @Option(name = "-out", metaVar = "connect", required = true, usage = "Input file to connect" ,forbids = "-u")
+    @Option(name = "-out", metaVar = "connect", usage = "Input file to connect" , forbids = "-u")
     private boolean outputConnect;
 
     @Argument(required = true, metaVar = "Output", usage = "Name files")
@@ -52,35 +51,34 @@ public class TarLauncher {
 
             System.err.println("String entered incorrectly");
             parser.printUsage(System.err);
+            return;
 
         }
 
-        if (inputSplit && files[0].matches(format)) {
+        if (inputSplit && files[0].split("/")[files[0].split("/").length-1].matches(format)) {
 
             Scanner reader = new Scanner(new FileReader(files[0]));
             Tar.split(reader);
-
-        } else{
-
-            System.err.println("Incorrect file name");
-            parser.printUsage(System.err);
+            return;
 
         }
 
         if (outputConnect) {
-            for (String nameFile : files) {
-                if (!nameFile.matches(format)) {
-                    System.out.println("Неверный формат файла");
-                    throw new IOException();
+
+                for (String nameFile : files) {
+                    if (!nameFile.split("/")[nameFile.split("/").length-1].matches(format)) {
+                        System.out.println("Неверный формат файла");
+                        throw new IOException();
+                    }
                 }
+                Tar.connect(files[files.length - 1], Arrays.copyOfRange(files, 0, files.length - 2));
+
+            } else {
+
+                System.err.println("Incorrect file name");
+                parser.printUsage(System.err);
+
             }
-             Tar.connect(files[files.length-1], Arrays.copyOfRange(files,0,files.length-2));
 
-        } else{
-
-            System.err.println("Incorrect file name");
-            parser.printUsage(System.err);
-
-        }
     }
 }

@@ -1,17 +1,3 @@
 input3.txt 2
 fggf
 dhdhdhhd
-input5.txt 10
-hddd
-d
-d
-fg
-h
-h
-hj
-j
-jjj
-jj
-input1.txt 1
-ggggg
-input6.txt 0
